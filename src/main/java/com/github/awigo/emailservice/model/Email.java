@@ -3,9 +3,11 @@ package com.github.awigo.emailservice.model;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity(name = "email")
 @Table(name = "email")
+@ToString
 @EqualsAndHashCode
 public class Email {
 
