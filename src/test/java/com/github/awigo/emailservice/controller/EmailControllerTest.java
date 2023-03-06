@@ -1,5 +1,7 @@
 package com.github.awigo.emailservice.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.awigo.emailservice.model.Email;
 import com.github.awigo.emailservice.service.EmailService;
 import org.junit.jupiter.api.DisplayName;
@@ -8,16 +10,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -71,13 +74,22 @@ class EmailControllerTest {
         when(emailService.addEmail(getEmail())).thenReturn(getEmail());
 
         //when
-        mockMvc.perform(post("/task"))
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/task")
+                        .content(asJsonString(getEmail()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                )
                 .andExpect(status().isCreated())
                 .andExpect(content().string(containsString(getEmail().getAddress())))
                 .andReturn();
 
         //then
         verify(emailService).addEmail(getEmail());
+    }
+
+    private String asJsonString(Email email) throws JsonProcessingException {
+        return new ObjectMapper().writeValueAsString(email);
     }
 
     private Email getEmail() {

@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class EmailController {
@@ -21,5 +23,11 @@ public class EmailController {
     public ResponseEntity<Email> getById(@PathVariable Long id) {
         Email email = emailService.getById(id);
         return new ResponseEntity<>(email, HttpStatus.OK);
+    }
+
+    @PostMapping("/task")
+    public ResponseEntity<Email> addEmail(@RequestBody Email email) {
+        Email result = emailService.addEmail(email);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 }
