@@ -33,4 +33,10 @@ public class EmailController {
         Long emailId = emailService.updateById(id, email);
         return new ResponseEntity<>(emailId, HttpStatus.NO_CONTENT);
     }
+
+    @DeleteMapping("/task/{id}")
+    public ResponseEntity<Long> deleteById(@PathVariable Long id) {
+        Long emailId = emailService.deleteById(id);
+        return new ResponseEntity<>(emailId, HttpStatus.OK);
+    }
 }
