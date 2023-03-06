@@ -71,7 +71,7 @@ class EmailControllerTest {
     @DisplayName("EmailController post test")
     void postTest() throws Exception {
         //given
-        when(emailService.addEmail(getEmail())).thenReturn(getEmail());
+        when(emailService.addEmail(getEmail())).thenReturn(ID);
 
         //when
         mockMvc.perform(MockMvcRequestBuilders
@@ -81,7 +81,7 @@ class EmailControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isCreated())
-                .andExpect(content().string(containsString(getEmail().getAddress())))
+                .andExpect(content().string(containsString(String.valueOf(ID))))
                 .andReturn();
 
         //then

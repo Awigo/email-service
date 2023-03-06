@@ -10,7 +10,7 @@ public class EmailService {
         return null;
     }
 
-    public Email addEmail(Email email) {
+    public Long addEmail(Email email) {
         return null;
     }
 }

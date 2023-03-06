@@ -26,8 +26,8 @@ public class EmailController {
     }
 
     @PostMapping("/task")
-    public ResponseEntity<Email> addEmail(@RequestBody Email email) {
-        Email result = emailService.addEmail(email);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    public ResponseEntity<Long> addEmail(@RequestBody Email email) {
+        Long emailId = emailService.addEmail(email);
+        return new ResponseEntity<>(emailId, HttpStatus.CREATED);
     }
 }
