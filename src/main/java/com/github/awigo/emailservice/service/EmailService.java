@@ -10,4 +10,7 @@ public class EmailService {
         return null;
     }
 
+    public Email addEmail(Email email) {
+        return null;
+    }
 }

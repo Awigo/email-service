@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,7 +35,7 @@ class EmailControllerTest {
     private EmailService emailService;
 
     @Test
-    @DisplayName("Controller simple unit test")
+    @DisplayName("EmailController simple unit test")
     void controllerUnitTest() {
         //given
         when(emailService.getById(ID)).thenReturn(getEmail());
@@ -48,8 +49,8 @@ class EmailControllerTest {
     }
 
     @Test
-    @DisplayName("Controller Mock MVC test")
-    void controllerMockMvcTest() throws Exception {
+    @DisplayName("EmailController get by id test")
+    void getByIdTest() throws Exception {
         //given
         when(emailService.getById(ID)).thenReturn(getEmail());
 
@@ -61,6 +62,22 @@ class EmailControllerTest {
 
         //then
         verify(emailService).getById(ID);
+    }
+
+    @Test
+    @DisplayName("EmailController post test")
+    void postTest() throws Exception {
+        //given
+        when(emailService.addEmail(getEmail())).thenReturn(getEmail());
+
+        //when
+        mockMvc.perform(post("/task"))
+                .andExpect(status().isCreated())
+                .andExpect(content().string(containsString(getEmail().getAddress())))
+                .andReturn();
+
+        //then
+        verify(emailService).addEmail(getEmail());
     }
 
     private Email getEmail() {
