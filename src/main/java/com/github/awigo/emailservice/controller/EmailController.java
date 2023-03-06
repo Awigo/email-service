@@ -4,6 +4,8 @@ import com.github.awigo.emailservice.model.Email;
 
 public class EmailController {
     public Email getById(Long id) {
-        return null;
+        Email email = new Email();
+        email.setAddress("jon@gmail.com");
+        return email;
     }
 }

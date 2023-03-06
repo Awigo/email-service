@@ -19,7 +19,6 @@ class EmailControllerTest {
 
         //then
         Assertions.assertEquals(email, result);
-
     }
 
     private Email getEmail() {
