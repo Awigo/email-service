@@ -27,4 +27,10 @@ public class EmailController {
         Long emailId = emailService.addEmail(email);
         return new ResponseEntity<>(emailId, HttpStatus.CREATED);
     }
+
+    @PutMapping("/task/{id}")
+    public ResponseEntity<Long> updateEmail(@PathVariable Long id, @RequestBody Email email) {
+        Long emailId = emailService.updateById(id, email);
+        return new ResponseEntity<>(emailId, HttpStatus.NO_CONTENT);
+    }
 }
