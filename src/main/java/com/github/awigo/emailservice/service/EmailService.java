@@ -17,4 +17,8 @@ public class EmailService {
     public Long updateById(Long id, Email email) {
         return null;
     }
+
+    public Long deleteById(Long id) {
+        return null;
+    }
 }

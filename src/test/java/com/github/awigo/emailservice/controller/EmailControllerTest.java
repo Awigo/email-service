@@ -20,6 +20,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -107,6 +108,22 @@ class EmailControllerTest {
 
         //then
         verify(emailService).updateById(ID, getEmail());
+    }
+
+    @Test
+    @DisplayName("EmailController delete test")
+    void deleteTest() throws Exception {
+        //given
+        when(emailService.deleteById(ID)).thenReturn(ID);
+
+        //when
+        mockMvc.perform(delete("/task/" + ID))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString(String.valueOf(ID))))
+                .andReturn();
+
+        //then
+        verify(emailService).deleteById(ID);
     }
 
     private String asJsonString(Email email) throws JsonProcessingException {
