@@ -2,6 +2,7 @@ package com.github.awigo.emailservice.model;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity(name = "email")
 @Table(name = "email")
@@ -12,6 +13,13 @@ public class Email {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String address;
+
+    public Email() {
+    }
+
+    public Email(String address) {
+        this.address = address;
+    }
 
     public String getAddress() {
         return address;

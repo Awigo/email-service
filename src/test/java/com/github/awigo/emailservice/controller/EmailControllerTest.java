@@ -1,9 +1,11 @@
 package com.github.awigo.emailservice.controller;
 
 import com.github.awigo.emailservice.model.Email;
+import com.github.awigo.emailservice.service.EmailService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 class EmailControllerTest {
 
@@ -12,7 +14,9 @@ class EmailControllerTest {
     void controllerUnitTest() {
         //given
         Email email = getEmail();
-        EmailController controller = new EmailController();
+        EmailService emailService = Mockito.mock(EmailService.class);
+        Mockito.when(emailService.getById(1L)).thenReturn(email);
+        EmailController controller = new EmailController(emailService);
 
         //when
         Email result = controller.getById(1L);
@@ -22,8 +26,6 @@ class EmailControllerTest {
     }
 
     private Email getEmail() {
-        Email email = new Email();
-        email.setAddress("jon@gmail.com");
-        return email;
+        return new Email("jon@gmail.com");
     }
 }
