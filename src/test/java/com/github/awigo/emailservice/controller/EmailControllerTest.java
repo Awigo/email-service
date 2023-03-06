@@ -88,6 +88,27 @@ class EmailControllerTest {
         verify(emailService).addEmail(getEmail());
     }
 
+    @Test
+    @DisplayName("EmailController put test")
+    void putTest() throws Exception {
+        //given
+        when(emailService.updateById(ID, getEmail())).thenReturn(ID);
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/task/" + ID)
+                        .content(asJsonString(getEmail()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isNoContent())
+                .andExpect(content().string(containsString(String.valueOf(ID))))
+                .andReturn();
+
+        //then
+        verify(emailService).updateById(ID, getEmail());
+    }
+
     private String asJsonString(Email email) throws JsonProcessingException {
         return new ObjectMapper().writeValueAsString(email);
     }

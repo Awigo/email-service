@@ -13,4 +13,8 @@ public class EmailService {
     public Long addEmail(Email email) {
         return null;
     }
+
+    public Long updateById(Long id, Email email) {
+        return null;
+    }
 }
