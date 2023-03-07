@@ -47,6 +47,31 @@ class EmailServiceTest {
         verify(emailRepository).save(email);
     }
 
+    @Test
+    @DisplayName("Put email test")
+    void putEmailTest() {
+        //given
+        Email beforeUpdate = getEmail();
+        EmailRepository emailRepository = mock(EmailRepository.class);
+        when(emailRepository.findById(ID)).thenReturn(Optional.of(beforeUpdate));
+        when(emailRepository.save(beforeUpdate)).thenReturn(beforeUpdate);
+
+        EmailService emailService = new EmailService(emailRepository);
+
+        Email afterUpdate = new Email();
+        afterUpdate.setId(ID);
+        afterUpdate.setAddress("updated@gmail.com");
+
+        //when
+        Email updated = emailService.updateById(ID, afterUpdate);
+
+        //then
+        assertEquals(afterUpdate.getId(), updated.getId());
+        assertEquals(afterUpdate.getAddress(), updated.getAddress());
+        verify(emailRepository).findById(ID);
+        verify(emailRepository).save(afterUpdate);
+    }
+
     private Email getEmail() {
         Email email = new Email();
         email.setId(ID);
