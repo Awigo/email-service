@@ -35,8 +35,8 @@ public class EmailController {
     }
 
     @DeleteMapping("/email/{id}")
-    public ResponseEntity<Long> deleteById(@PathVariable Long id) {
-        Long emailId = emailService.deleteById(id);
-        return new ResponseEntity<>(emailId, HttpStatus.OK);
+    public ResponseEntity<Email> deleteById(@PathVariable Long id) {
+        Email deleted = emailService.deleteById(id);
+        return new ResponseEntity<>(deleted, HttpStatus.OK);
     }
 }

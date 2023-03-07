@@ -114,12 +114,12 @@ class EmailControllerTest {
     @DisplayName("EmailController delete test")
     void deleteTest() throws Exception {
         //given
-        when(emailService.deleteById(ID)).thenReturn(ID);
+        when(emailService.deleteById(ID)).thenReturn(getEmail());
 
         //when
         mockMvc.perform(delete("/email/" + ID))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString(String.valueOf(ID))))
+                .andExpect(content().string(containsString(getEmail().getAddress())))
                 .andReturn();
 
         //then

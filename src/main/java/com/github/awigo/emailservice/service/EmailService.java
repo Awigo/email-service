@@ -33,7 +33,7 @@ public class EmailService {
         return toUpdate;
     }
 
-    public Long deleteById(Long id) {
+    public Email deleteById(Long id) {
         return null;
     }
 }
