@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 public class EmailService {
 
     public Email getById(Long id) {
-        return null;
+        Email email = new Email();
+        email.setId(id);
+        email.setAddress("bob@gmail.com");
+        return email;
     }
 
     public Long addEmail(Email email) {
