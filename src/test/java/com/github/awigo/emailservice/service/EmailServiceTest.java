@@ -72,6 +72,23 @@ class EmailServiceTest {
         verify(emailRepository).save(afterUpdate);
     }
 
+    @Test
+    @DisplayName("Delete email test")
+    void deleteEmailTest() {
+        //given
+        Email email = getEmail();
+        EmailRepository emailRepository = mock(EmailRepository.class);
+        when(emailRepository.findById(email.getId())).thenReturn(Optional.of(email));
+        EmailService emailService = new EmailService(emailRepository);
+
+        //when
+        Email deleted = emailService.deleteById(ID);
+
+        //then
+        assertEquals(email, deleted);
+        verify(emailRepository).delete(email);
+    }
+
     private Email getEmail() {
         Email email = new Email();
         email.setId(ID);
