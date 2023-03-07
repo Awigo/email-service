@@ -5,6 +5,8 @@ import com.github.awigo.emailservice.repository.EmailRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -17,7 +19,7 @@ class EmailServiceTest {
     void getByIdTest() {
         //given
         EmailRepository emailRepository = mock(EmailRepository.class);
-        when(emailRepository.getReferenceById(ID)).thenReturn(getEmail());
+        when(emailRepository.findById(ID)).thenReturn(Optional.of(getEmail()));
         EmailService emailService = new EmailService(emailRepository);
 
         //when
@@ -25,7 +27,7 @@ class EmailServiceTest {
 
         //then
         assertEquals(getEmail(), email);
-        verify(emailRepository).getReferenceById(ID);
+        verify(emailRepository).findById(ID);
     }
 
     @Test

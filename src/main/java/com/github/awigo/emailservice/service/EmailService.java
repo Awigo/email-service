@@ -14,7 +14,7 @@ public class EmailService {
     }
 
     public Email getById(Long id) {
-        return emailRepository.getReferenceById(id);
+        return emailRepository.findById(id).orElse(null);
     }
 
     public Long addEmail(Email email) {
