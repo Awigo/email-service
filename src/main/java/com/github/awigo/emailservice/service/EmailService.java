@@ -1,16 +1,20 @@
 package com.github.awigo.emailservice.service;
 
 import com.github.awigo.emailservice.model.Email;
+import com.github.awigo.emailservice.repository.EmailRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
 
+    private final EmailRepository emailRepository;
+
+    public EmailService(EmailRepository emailRepository) {
+        this.emailRepository = emailRepository;
+    }
+
     public Email getById(Long id) {
-        Email email = new Email();
-        email.setId(id);
-        email.setAddress("bob@gmail.com");
-        return email;
+        return emailRepository.getReferenceById(id);
     }
 
     public Long addEmail(Email email) {
