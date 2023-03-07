@@ -93,7 +93,7 @@ class EmailControllerTest {
     @DisplayName("EmailController put test")
     void putTest() throws Exception {
         //given
-        when(emailService.updateById(ID, getEmail())).thenReturn(ID);
+        when(emailService.updateById(ID, getEmail())).thenReturn(getEmail());
 
         //when
         mockMvc.perform(MockMvcRequestBuilders
@@ -102,8 +102,8 @@ class EmailControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(status().isNoContent())
-                .andExpect(content().string(containsString(String.valueOf(ID))))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString(getEmail().getAddress())))
                 .andReturn();
 
         //then

@@ -29,9 +29,9 @@ public class EmailController {
     }
 
     @PutMapping("/email/{id}")
-    public ResponseEntity<Long> updateEmail(@PathVariable Long id, @RequestBody Email email) {
-        Long emailId = emailService.updateById(id, email);
-        return new ResponseEntity<>(emailId, HttpStatus.NO_CONTENT);
+    public ResponseEntity<Email> updateEmail(@PathVariable Long id, @RequestBody Email email) {
+        Email updated = emailService.updateById(id, email);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
     @DeleteMapping("/email/{id}")

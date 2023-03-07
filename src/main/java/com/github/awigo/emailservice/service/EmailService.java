@@ -14,7 +14,9 @@ public class EmailService {
     }
 
     public Email getById(Long id) {
-        return emailRepository.findById(id).orElse(null);
+        return emailRepository
+                .findById(id)
+                .orElse(null);
     }
 
     public Long addEmail(Email email) {
@@ -22,7 +24,7 @@ public class EmailService {
         return saved.getId();
     }
 
-    public Long updateById(Long id, Email email) {
+    public Email updateById(Long id, Email email) {
         return null;
     }
 
