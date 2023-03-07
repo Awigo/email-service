@@ -4,6 +4,8 @@ import com.github.awigo.emailservice.model.Email;
 import com.github.awigo.emailservice.repository.EmailRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class EmailService {
 
@@ -25,7 +27,10 @@ public class EmailService {
     }
 
     public Email updateById(Long id, Email email) {
-        return null;
+        Email toUpdate = emailRepository.findById(id).get();
+        toUpdate.setAddress(email.getAddress());
+        emailRepository.save(toUpdate);
+        return toUpdate;
     }
 
     public Long deleteById(Long id) {
