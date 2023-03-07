@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
 
 class EmailServiceTest {
 
-    private static final long ID = 1L;
+    private static final long ID = 42L;
 
     @Test
     @DisplayName("Get email by id test")
@@ -26,6 +26,23 @@ class EmailServiceTest {
         //then
         assertEquals(getEmail(), email);
         verify(emailRepository).getReferenceById(ID);
+    }
+
+    @Test
+    @DisplayName("Post email test")
+    void postEmailTest() {
+        //given
+        Email email = getEmail();
+        EmailRepository emailRepository = mock(EmailRepository.class);
+        when(emailRepository.save(email)).thenReturn(email);
+        EmailService emailService = new EmailService(emailRepository);
+
+        //when
+        Long emailId = emailService.addEmail(email);
+
+        //then
+        assertEquals(email.getId(), emailId);
+        verify(emailRepository).save(email);
     }
 
     private Email getEmail() {
