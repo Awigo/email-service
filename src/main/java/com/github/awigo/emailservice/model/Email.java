@@ -22,6 +22,10 @@ public class Email {
         this.address = address;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getAddress() {
         return address;
     }
