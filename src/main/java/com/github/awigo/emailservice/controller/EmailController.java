@@ -16,25 +16,25 @@ public class EmailController {
         this.emailService = emailService;
     }
 
-    @GetMapping("/task/{id}")
+    @GetMapping("/email/{id}")
     public ResponseEntity<Email> getById(@PathVariable Long id) {
         Email email = emailService.getById(id);
         return new ResponseEntity<>(email, HttpStatus.OK);
     }
 
-    @PostMapping("/task")
+    @PostMapping("/email")
     public ResponseEntity<Long> addEmail(@RequestBody Email email) {
         Long emailId = emailService.addEmail(email);
         return new ResponseEntity<>(emailId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/task/{id}")
+    @PutMapping("/email/{id}")
     public ResponseEntity<Long> updateEmail(@PathVariable Long id, @RequestBody Email email) {
         Long emailId = emailService.updateById(id, email);
         return new ResponseEntity<>(emailId, HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/task/{id}")
+    @DeleteMapping("/email/{id}")
     public ResponseEntity<Long> deleteById(@PathVariable Long id) {
         Long emailId = emailService.deleteById(id);
         return new ResponseEntity<>(emailId, HttpStatus.OK);

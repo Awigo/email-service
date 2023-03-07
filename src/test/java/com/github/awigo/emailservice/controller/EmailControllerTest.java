@@ -59,7 +59,7 @@ class EmailControllerTest {
         when(emailService.getById(ID)).thenReturn(getEmail());
 
         //when
-        mockMvc.perform(get("/task/" + ID))
+        mockMvc.perform(get("/email/" + ID))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(getEmail().getAddress())))
                 .andReturn();
@@ -76,7 +76,7 @@ class EmailControllerTest {
 
         //when
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("/task")
+                        .post("/email")
                         .content(asJsonString(getEmail()))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -97,7 +97,7 @@ class EmailControllerTest {
 
         //when
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("/task/" + ID)
+                        .put("/email/" + ID)
                         .content(asJsonString(getEmail()))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -117,7 +117,7 @@ class EmailControllerTest {
         when(emailService.deleteById(ID)).thenReturn(ID);
 
         //when
-        mockMvc.perform(delete("/task/" + ID))
+        mockMvc.perform(delete("/email/" + ID))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(String.valueOf(ID))))
                 .andReturn();
