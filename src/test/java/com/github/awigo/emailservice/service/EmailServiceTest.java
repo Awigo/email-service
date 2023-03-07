@@ -4,23 +4,34 @@ import com.github.awigo.emailservice.model.Email;
 import com.github.awigo.emailservice.repository.EmailRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 class EmailServiceTest {
 
     private static final long ID = 42L;
+
+    @Autowired
+    private EmailService emailService;
+
+    @MockBean
+    private EmailRepository emailRepository;
 
     @Test
     @DisplayName("Get email by id test")
     void getByIdTest() {
         //given
-        EmailRepository emailRepository = mock(EmailRepository.class);
         when(emailRepository.findById(ID)).thenReturn(Optional.of(getEmail()));
-        EmailService emailService = new EmailService(emailRepository);
 
         //when
         Email email = emailService.getById(ID);
@@ -35,9 +46,7 @@ class EmailServiceTest {
     void postEmailTest() {
         //given
         Email email = getEmail();
-        EmailRepository emailRepository = mock(EmailRepository.class);
         when(emailRepository.save(email)).thenReturn(email);
-        EmailService emailService = new EmailService(emailRepository);
 
         //when
         Long emailId = emailService.addEmail(email);
@@ -52,11 +61,8 @@ class EmailServiceTest {
     void putEmailTest() {
         //given
         Email beforeUpdate = getEmail();
-        EmailRepository emailRepository = mock(EmailRepository.class);
         when(emailRepository.findById(ID)).thenReturn(Optional.of(beforeUpdate));
         when(emailRepository.save(beforeUpdate)).thenReturn(beforeUpdate);
-
-        EmailService emailService = new EmailService(emailRepository);
 
         Email afterUpdate = new Email();
         afterUpdate.setId(ID);
@@ -77,9 +83,7 @@ class EmailServiceTest {
     void deleteEmailTest() {
         //given
         Email email = getEmail();
-        EmailRepository emailRepository = mock(EmailRepository.class);
         when(emailRepository.findById(email.getId())).thenReturn(Optional.of(email));
-        EmailService emailService = new EmailService(emailRepository);
 
         //when
         Email deleted = emailService.deleteById(ID);
