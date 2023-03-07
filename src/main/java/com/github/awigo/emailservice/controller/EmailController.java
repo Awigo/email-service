@@ -6,6 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.HashMap;
 
 @Controller
 public class EmailController {
@@ -25,7 +29,13 @@ public class EmailController {
     @PostMapping("/email")
     public ResponseEntity<Long> addEmail(@RequestBody Email email) {
         Long emailId = emailService.addEmail(email);
-        return new ResponseEntity<>(emailId, HttpStatus.CREATED);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(emailId)
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/email/{id}")
