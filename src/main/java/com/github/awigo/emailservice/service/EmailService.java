@@ -1,10 +1,9 @@
 package com.github.awigo.emailservice.service;
 
+import com.github.awigo.emailservice.exceptions.UserNotFoundException;
 import com.github.awigo.emailservice.model.Email;
 import com.github.awigo.emailservice.repository.EmailRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class EmailService {
@@ -18,7 +17,7 @@ public class EmailService {
     public Email getById(Long id) {
         return emailRepository
                 .findById(id)
-                .orElse(null);
+                .orElseThrow(() -> new UserNotFoundException(String.format("User with id %d not found in repository", id)));
     }
 
     public Long addEmail(Email email) {
@@ -27,7 +26,8 @@ public class EmailService {
     }
 
     public Email updateById(Long id, Email email) {
-        Email toUpdate = emailRepository.findById(id).get();
+        Email toUpdate = emailRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(String.format("User with id %d not found in repository", id)));
         toUpdate.setAddress(email.getAddress());
         emailRepository.save(toUpdate);
         return toUpdate;
