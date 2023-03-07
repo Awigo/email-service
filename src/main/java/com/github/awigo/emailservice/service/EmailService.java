@@ -34,6 +34,9 @@ public class EmailService {
     }
 
     public Email deleteById(Long id) {
-        return null;
+        Email toDelete = emailRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(String.format("User with id %d not found in repository", id)));
+        emailRepository.delete(toDelete);
+        return toDelete;
     }
 }
