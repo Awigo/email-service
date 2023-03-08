@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @Controller
 public class EmailController {
@@ -25,6 +26,12 @@ public class EmailController {
     public HttpStatus sendEmail(@RequestBody Email email) {
         emailService.sendEmail(email.getFrom(), email.getTo(), email.getSubject(), email.getMessage());
         return HttpStatus.OK;
+    }
+
+    @GetMapping("/email/all")
+    public ResponseEntity<List<EmailAddress>> getAll() {
+        List<EmailAddress> emailAddressList = emailService.getAll();
+        return new ResponseEntity<>(emailAddressList, HttpStatus.OK);
     }
 
     @GetMapping("/email/{id}")
