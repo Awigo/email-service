@@ -1,5 +1,6 @@
 package com.github.awigo.emailservice.controller;
 
+import com.github.awigo.emailservice.model.Email;
 import com.github.awigo.emailservice.model.EmailAddress;
 import com.github.awigo.emailservice.service.EmailService;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,8 @@ public class EmailController {
 
     @ResponseBody
     @PostMapping("/send-email")
-    public HttpStatus sendEmail(
-            @RequestParam String from,
-            @RequestParam String to,
-            @RequestParam String subject,
-            @RequestParam String message) {
-        emailService.sendEmail(from, to, subject, message);
+    public HttpStatus sendEmail(@RequestBody Email email) {
+        emailService.sendEmail(email.getFrom(), email.getTo(), email.getSubject(), email.getMessage());
         return HttpStatus.OK;
     }
 
@@ -37,8 +34,8 @@ public class EmailController {
     }
 
     @PostMapping("/email")
-    public ResponseEntity<Long> addEmail(@RequestBody EmailAddress email) {
-        Long emailId = emailService.addEmailAddress(email);
+    public ResponseEntity<Long> addEmailAddress(@RequestBody EmailAddress emailAddress) {
+        Long emailId = emailService.addEmailAddress(emailAddress);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
