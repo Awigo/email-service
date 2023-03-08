@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.HashMap;
 
 @Controller
 public class EmailController {
@@ -18,6 +17,15 @@ public class EmailController {
 
     public EmailController(EmailService emailService) {
         this.emailService = emailService;
+    }
+
+    @PostMapping("/send-email")
+    public void sendEmail(
+            @RequestParam String from,
+            @RequestParam String to,
+            @RequestParam String subject,
+            @RequestParam String message) {
+        emailService.sendEmail(from, to, subject, message);
     }
 
     @GetMapping("/email/{id}")
