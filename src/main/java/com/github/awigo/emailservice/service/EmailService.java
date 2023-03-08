@@ -1,6 +1,7 @@
 package com.github.awigo.emailservice.service;
 
 import com.github.awigo.emailservice.exceptions.UserNotFoundException;
+import com.github.awigo.emailservice.model.Email;
 import com.github.awigo.emailservice.model.EmailAddress;
 import com.github.awigo.emailservice.repository.EmailAddressRepository;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,12 +21,12 @@ public class EmailService {
         this.emailSender = emailSender;
     }
 
-    public void sendEmail(String from, String to, String subject, String text) {
+    public void sendEmail(Email email) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
+        message.setFrom(email.getFrom());
+        message.setTo(email.getTo());
+        message.setSubject(email.getSubject());
+        message.setText(email.getMessage());
         emailSender.send(message);
     }
 

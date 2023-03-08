@@ -24,7 +24,7 @@ public class EmailController {
     @ResponseBody
     @PostMapping("/send-email")
     public HttpStatus sendEmail(@RequestBody Email email) {
-        emailService.sendEmail(email.getFrom(), email.getTo(), email.getSubject(), email.getMessage());
+        emailService.sendEmail(email);
         return HttpStatus.OK;
     }
 
