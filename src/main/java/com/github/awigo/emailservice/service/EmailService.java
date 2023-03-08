@@ -7,6 +7,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmailService {
 
@@ -51,5 +53,9 @@ public class EmailService {
                 .orElseThrow(() -> new UserNotFoundException(String.format("Address with id %d not found in repository", id)));
         emailAddressRepository.delete(toDelete);
         return toDelete;
+    }
+
+    public List<EmailAddress> getAll() {
+        return null;
     }
 }

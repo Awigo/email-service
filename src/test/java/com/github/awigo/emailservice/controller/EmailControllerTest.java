@@ -16,6 +16,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -65,6 +67,30 @@ class EmailControllerTest {
 
         //then
         verify(emailService).getById(ID);
+    }
+
+    @Test
+    @DisplayName("EmailController get all test")
+    void getAllTest() throws Exception {
+        //given
+        when(emailService.getAll()).thenReturn(getEmailList());
+
+        //when
+        mockMvc.perform(get("/email/all"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("alice@gmail.com")))
+                .andExpect(content().string(containsString("bob@gmail.com")))
+                .andReturn();
+
+        //then
+        verify(emailService).getAll();
+    }
+
+    private List<EmailAddress> getEmailList() {
+        return List.of(
+                new EmailAddress("alice@gmail.com"),
+                new EmailAddress("bob@gmail.com")
+        );
     }
 
     @Test
