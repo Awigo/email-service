@@ -12,13 +12,21 @@ import java.util.List;
 
 @Service
 public class EmailService {
-
     private final EmailAddressRepository emailAddressRepository;
+
     private final JavaMailSender emailSender;
 
     public EmailService(EmailAddressRepository emailAddressRepository, JavaMailSender emailSender) {
         this.emailAddressRepository = emailAddressRepository;
         this.emailSender = emailSender;
+    }
+
+    public void sendEmailToAll(Email email) {
+        List<EmailAddress> emailAddresses = emailAddressRepository.findAll();
+        emailAddresses.forEach(emailAddress -> {
+            email.setTo(emailAddresses.get(0).getAddress());
+            sendEmail(email);
+        });
     }
 
     public void sendEmail(Email email) {

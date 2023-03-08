@@ -22,9 +22,9 @@ public class EmailController {
     }
 
     @ResponseBody
-    @PostMapping("/send-email")
+    @PostMapping("/send-email-to-all")
     public HttpStatus sendEmail(@RequestBody Email email) {
-        emailService.sendEmail(email);
+        emailService.sendEmailToAll(email);
         return HttpStatus.OK;
     }
 
