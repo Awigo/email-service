@@ -24,7 +24,7 @@ public class EmailService {
     public void sendEmailToAll(Email email) {
         List<EmailAddress> emailAddresses = emailAddressRepository.findAll();
         emailAddresses.forEach(emailAddress -> {
-            email.setTo(emailAddresses.get(0).getAddress());
+            email.setTo(emailAddress.getAddress());
             sendEmail(email);
         });
     }
