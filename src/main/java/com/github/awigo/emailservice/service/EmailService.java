@@ -56,6 +56,6 @@ public class EmailService {
     }
 
     public List<EmailAddress> getAll() {
-        return null;
+        return emailAddressRepository.findAll();
     }
 }
