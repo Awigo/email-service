@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,6 +27,22 @@ class EmailServiceTest {
 
     @MockBean
     private EmailAddressRepository emailRepository;
+
+    @Test
+    @DisplayName("Get all emails test")
+    void getAllTest() {
+        //given
+        when(emailRepository.findAll()).thenReturn(getEmailList());
+
+        //when
+        List<EmailAddress> emailAddress = emailService.getAll();
+
+        //then
+        assertEquals(2, emailAddress.size());
+        assertEquals("alice@gmail.com", emailAddress.get(0).getAddress());
+        assertEquals("bob@gmail.com", emailAddress.get(1).getAddress());
+        verify(emailRepository).findAll();
+    }
 
     @Test
     @DisplayName("Get email by id test")
@@ -98,5 +115,12 @@ class EmailServiceTest {
         email.setId(ID);
         email.setAddress("bob@gmail.com");
         return email;
+    }
+
+    private List<EmailAddress> getEmailList() {
+        return List.of(
+                new EmailAddress("alice@gmail.com"),
+                new EmailAddress("bob@gmail.com")
+        );
     }
 }
