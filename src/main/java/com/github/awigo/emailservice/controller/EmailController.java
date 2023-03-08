@@ -19,13 +19,15 @@ public class EmailController {
         this.emailService = emailService;
     }
 
+    @ResponseBody
     @PostMapping("/send-email")
-    public void sendEmail(
+    public HttpStatus sendEmail(
             @RequestParam String from,
             @RequestParam String to,
             @RequestParam String subject,
             @RequestParam String message) {
         emailService.sendEmail(from, to, subject, message);
+        return HttpStatus.OK;
     }
 
     @GetMapping("/email/{id}")
