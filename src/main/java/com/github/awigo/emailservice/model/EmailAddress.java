@@ -4,21 +4,21 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@Entity(name = "email")
-@Table(name = "email")
+@Entity(name = "emailAddress")
+@Table(name = "email_address")
 @ToString
 @EqualsAndHashCode
-public class Email {
+public class EmailAddress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String address;
 
-    public Email() {
+    public EmailAddress() {
     }
 
-    public Email(String address) {
+    public EmailAddress(String address) {
         this.address = address;
     }
 

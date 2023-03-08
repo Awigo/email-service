@@ -2,7 +2,7 @@ package com.github.awigo.emailservice.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.awigo.emailservice.model.Email;
+import com.github.awigo.emailservice.model.EmailAddress;
 import com.github.awigo.emailservice.service.EmailService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.regex.Matcher;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,7 +45,7 @@ class EmailControllerTest {
         EmailController controller = new EmailController(emailService);
 
         //when
-        ResponseEntity<Email> result = controller.getById(ID);
+        ResponseEntity<EmailAddress> result = controller.getById(ID);
 
         //then
         assertEquals(getEmail(), result.getBody());
@@ -73,7 +71,7 @@ class EmailControllerTest {
     @DisplayName("EmailController post test")
     void postTest() throws Exception {
         //given
-        when(emailService.addEmail(getEmail())).thenReturn(ID);
+        when(emailService.addEmailAddress(getEmail())).thenReturn(ID);
 
         //when
         mockMvc.perform(MockMvcRequestBuilders
@@ -87,7 +85,7 @@ class EmailControllerTest {
                 .andReturn();
 
         //then
-        verify(emailService).addEmail(getEmail());
+        verify(emailService).addEmailAddress(getEmail());
     }
 
     @Test
@@ -127,11 +125,11 @@ class EmailControllerTest {
         verify(emailService).deleteById(ID);
     }
 
-    private String asJsonString(Email email) throws JsonProcessingException {
+    private String asJsonString(EmailAddress email) throws JsonProcessingException {
         return new ObjectMapper().writeValueAsString(email);
     }
 
-    private Email getEmail() {
-        return new Email("jon@gmail.com");
+    private EmailAddress getEmail() {
+        return new EmailAddress("jon@gmail.com");
     }
 }

@@ -1,8 +1,8 @@
 package com.github.awigo.emailservice.service;
 
 import com.github.awigo.emailservice.exceptions.UserNotFoundException;
-import com.github.awigo.emailservice.model.Email;
-import com.github.awigo.emailservice.repository.EmailRepository;
+import com.github.awigo.emailservice.model.EmailAddress;
+import com.github.awigo.emailservice.repository.EmailAddressRepository;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-    private final EmailRepository emailRepository;
+    private final EmailAddressRepository emailAddressRepository;
     private final JavaMailSender emailSender;
 
-    public EmailService(EmailRepository emailRepository, JavaMailSender emailSender) {
-        this.emailRepository = emailRepository;
+    public EmailService(EmailAddressRepository emailAddressRepository, JavaMailSender emailSender) {
+        this.emailAddressRepository = emailAddressRepository;
         this.emailSender = emailSender;
     }
 
@@ -27,29 +27,29 @@ public class EmailService {
         emailSender.send(message);
     }
 
-    public Email getById(Long id) {
-        return emailRepository
+    public EmailAddress getById(Long id) {
+        return emailAddressRepository
                 .findById(id)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with id %d not found in repository", id)));
+                .orElseThrow(() -> new UserNotFoundException(String.format("Address with id %d not found in repository", id)));
     }
 
-    public Long addEmail(Email email) {
-        Email saved = emailRepository.save(email);
+    public Long addEmailAddress(EmailAddress email) {
+        EmailAddress saved = emailAddressRepository.save(email);
         return saved.getId();
     }
 
-    public Email updateById(Long id, Email email) {
-        Email toUpdate = emailRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with id %d not found in repository", id)));
+    public EmailAddress updateById(Long id, EmailAddress email) {
+        EmailAddress toUpdate = emailAddressRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(String.format("Address with id %d not found in repository", id)));
         toUpdate.setAddress(email.getAddress());
-        emailRepository.save(toUpdate);
+        emailAddressRepository.save(toUpdate);
         return toUpdate;
     }
 
-    public Email deleteById(Long id) {
-        Email toDelete = emailRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with id %d not found in repository", id)));
-        emailRepository.delete(toDelete);
+    public EmailAddress deleteById(Long id) {
+        EmailAddress toDelete = emailAddressRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(String.format("Address with id %d not found in repository", id)));
+        emailAddressRepository.delete(toDelete);
         return toDelete;
     }
 }

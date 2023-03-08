@@ -1,6 +1,6 @@
 package com.github.awigo.emailservice.controller;
 
-import com.github.awigo.emailservice.model.Email;
+import com.github.awigo.emailservice.model.EmailAddress;
 import com.github.awigo.emailservice.service.EmailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,14 +31,14 @@ public class EmailController {
     }
 
     @GetMapping("/email/{id}")
-    public ResponseEntity<Email> getById(@PathVariable Long id) {
-        Email email = emailService.getById(id);
+    public ResponseEntity<EmailAddress> getById(@PathVariable Long id) {
+        EmailAddress email = emailService.getById(id);
         return new ResponseEntity<>(email, HttpStatus.OK);
     }
 
     @PostMapping("/email")
-    public ResponseEntity<Long> addEmail(@RequestBody Email email) {
-        Long emailId = emailService.addEmail(email);
+    public ResponseEntity<Long> addEmail(@RequestBody EmailAddress email) {
+        Long emailId = emailService.addEmailAddress(email);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -49,14 +49,14 @@ public class EmailController {
     }
 
     @PutMapping("/email/{id}")
-    public ResponseEntity<Email> updateEmail(@PathVariable Long id, @RequestBody Email email) {
-        Email updated = emailService.updateById(id, email);
+    public ResponseEntity<EmailAddress> updateEmail(@PathVariable Long id, @RequestBody EmailAddress email) {
+        EmailAddress updated = emailService.updateById(id, email);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
     @DeleteMapping("/email/{id}")
-    public ResponseEntity<Email> deleteById(@PathVariable Long id) {
-        Email deleted = emailService.deleteById(id);
+    public ResponseEntity<EmailAddress> deleteById(@PathVariable Long id) {
+        EmailAddress deleted = emailService.deleteById(id);
         return new ResponseEntity<>(deleted, HttpStatus.OK);
     }
 }

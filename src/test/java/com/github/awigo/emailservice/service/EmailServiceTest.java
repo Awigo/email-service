@@ -1,7 +1,7 @@
 package com.github.awigo.emailservice.service;
 
-import com.github.awigo.emailservice.model.Email;
-import com.github.awigo.emailservice.repository.EmailRepository;
+import com.github.awigo.emailservice.model.EmailAddress;
+import com.github.awigo.emailservice.repository.EmailAddressRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ class EmailServiceTest {
     private EmailService emailService;
 
     @MockBean
-    private EmailRepository emailRepository;
+    private EmailAddressRepository emailRepository;
 
     @Test
     @DisplayName("Get email by id test")
@@ -34,7 +34,7 @@ class EmailServiceTest {
         when(emailRepository.findById(ID)).thenReturn(Optional.of(getEmail()));
 
         //when
-        Email email = emailService.getById(ID);
+        EmailAddress email = emailService.getById(ID);
 
         //then
         assertEquals(getEmail(), email);
@@ -45,11 +45,11 @@ class EmailServiceTest {
     @DisplayName("Post email test")
     void postEmailTest() {
         //given
-        Email email = getEmail();
+        EmailAddress email = getEmail();
         when(emailRepository.save(email)).thenReturn(email);
 
         //when
-        Long emailId = emailService.addEmail(email);
+        Long emailId = emailService.addEmailAddress(email);
 
         //then
         assertEquals(email.getId(), emailId);
@@ -60,16 +60,16 @@ class EmailServiceTest {
     @DisplayName("Put email test")
     void putEmailTest() {
         //given
-        Email beforeUpdate = getEmail();
+        EmailAddress beforeUpdate = getEmail();
         when(emailRepository.findById(ID)).thenReturn(Optional.of(beforeUpdate));
         when(emailRepository.save(beforeUpdate)).thenReturn(beforeUpdate);
 
-        Email afterUpdate = new Email();
+        EmailAddress afterUpdate = new EmailAddress();
         afterUpdate.setId(ID);
         afterUpdate.setAddress("updated@gmail.com");
 
         //when
-        Email updated = emailService.updateById(ID, afterUpdate);
+        EmailAddress updated = emailService.updateById(ID, afterUpdate);
 
         //then
         assertEquals(afterUpdate.getId(), updated.getId());
@@ -82,19 +82,19 @@ class EmailServiceTest {
     @DisplayName("Delete email test")
     void deleteEmailTest() {
         //given
-        Email email = getEmail();
+        EmailAddress email = getEmail();
         when(emailRepository.findById(email.getId())).thenReturn(Optional.of(email));
 
         //when
-        Email deleted = emailService.deleteById(ID);
+        EmailAddress deleted = emailService.deleteById(ID);
 
         //then
         assertEquals(email, deleted);
         verify(emailRepository).delete(email);
     }
 
-    private Email getEmail() {
-        Email email = new Email();
+    private EmailAddress getEmail() {
+        EmailAddress email = new EmailAddress();
         email.setId(ID);
         email.setAddress("bob@gmail.com");
         return email;
