@@ -18,9 +18,5 @@
 ### Here is an example
 ```
 mvn clean package
-java -jar target/email-service-0.0.1-SNAPSHOT.jar 
--Dspring.mail.host=smtp-provider.com 
--Dpring.mail.port=587
--Dspring.mail.username=my_username
--Dpring.mail.password=my_password
+java -jar target/email-service-0.0.1-SNAPSHOT.jar --spring.mail.host="smtp-provider.com" --spring.mail.port=587 --spring.mail.username="username" --spring.mail.password="password"
 ```
