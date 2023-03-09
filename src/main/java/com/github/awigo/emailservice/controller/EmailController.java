@@ -5,14 +5,13 @@ import com.github.awigo.emailservice.model.EmailAddress;
 import com.github.awigo.emailservice.service.EmailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
 
-@Controller
+@RestController
 public class EmailController {
 
     private final EmailService emailService;
@@ -21,7 +20,6 @@ public class EmailController {
         this.emailService = emailService;
     }
 
-    @ResponseBody
     @PostMapping("/send-email-to-all")
     public HttpStatus sendEmail(@RequestBody Email email) {
         emailService.sendEmailToAll(email);
